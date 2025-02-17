@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <interpreter.c>
 
 // Tamanho máximo da entrada
 #define MAX_INPUT_SIZE 256
@@ -213,26 +212,56 @@ void interpret_code(const char *code)
   }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
   char code[MAX_INPUT_SIZE];
 
-  printf("Digite seu código (linha por linha, digite 'exit' para sair):\n");
-  while (1)
-  {
-    printf("> ");
-    fgets(code, sizeof(code), stdin);
-
-    // Remove o caractere de nova linha
-    code[strcspn(code, "\n")] = '\0';
-
-    if (strcmp(code, "exit") == 0)
-    {
-      break;
+  if(argc == 2) {
+    // Abre o arquivo para leitura
+    FILE *file = fopen(argv[1], "r");
+    if (!file) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
     }
 
-    interpret_code(code);
+    // Lê o arquivo linha por linha
+    while (fgets(code, sizeof(code), file)) {
+      // Remove o caractere de nova linha
+      code[strcspn(code, "\n")] = '\0';
+
+      if (strcmp(code, "exit") == 0)
+      {
+        break;
+      }
+
+      // Interpreta a linha
+      interpret_code(code);
+    }
+
+    // Fecha o arquivo
+    fclose(file);
+
+
+  }else{
+    printf("Digite seu código (linha por linha, digite 'exit' para sair):\n");
+    while (1)
+    {
+      printf("> ");
+      fgets(code, sizeof(code), stdin);
+
+      // Remove o caractere de nova linha
+      code[strcspn(code, "\n")] = '\0';
+
+      if (strcmp(code, "exit") == 0)
+      {
+        break;
+      }
+
+      interpret_code(code);
+    }
   }
+
+
 
   return 0;
 }
