@@ -100,7 +100,7 @@ int evaluate_condition(const char **input)
 }
 
 // Função para executar um bloco de código
-void execute_block(const char **input)
+void execute_command(const char **input)
 {
   skip_whitespace(input);
 
@@ -133,10 +133,29 @@ void execute_block(const char **input)
         putchar('\n');
       }
     }
-    else if (isalpha(**input))
-    { // Variável
-      char var = parse_variable(input);
-      printf("%d\n", variables[var - 'a']);
+  }
+  else if (strncmp(*input, "input", 5))
+  {
+  }
+  else if (isalpha(**input))
+  {
+    char var = parse_variable(input);
+    skip_whitespace(input);
+
+    if (**input == '=')
+    {
+      input++;
+      skip_whitespace(input);
+
+      if (isdigit(*input))
+      {
+        variables[var - 'a'] = parse_number(input);
+      }
+      else if (isalpha(*input))
+      {
+        char other_var = parse_variable(input);
+        variables[var - 'a'] = variables[other_var - 'a'];
+      }
     }
   }
 }
@@ -168,31 +187,25 @@ void interpret_code(const char *code)
         // Executa o bloco se a condição for verdadeira
         if (condition)
         {
-          execute_block(&input);
+          execute_command(&input);
+        }
+        else
+        {
+          // Ignora o bloco se a condição for falsa
+          // while (**input != '\0' && strncmp(input, "end", 3) != 0)
+          // {
+          //   input++;
+          // }
+          // if (strncmp(input, "end", 3) == 0)
+          // {
+          //   input += 3; // Avança "end"
+          // }
         }
       }
     }
-    else if (isalpha(*input))
-    { // Atribuição de variável
-      char var = parse_variable(&input);
-      skip_whitespace(&input);
-
-      if (*input == '=')
-      {
-        input++; // Avança '='
-        skip_whitespace(&input);
-
-        // Lê o valor
-        if (isdigit(*input))
-        {
-          variables[var - 'a'] = parse_number(&input);
-        }
-        else if (isalpha(*input))
-        {
-          char other_var = parse_variable(&input);
-          variables[var - 'a'] = variables[other_var - 'a'];
-        }
-      }
+    else
+    {
+      execute_command(&input);
     }
 
     skip_whitespace(&input);
