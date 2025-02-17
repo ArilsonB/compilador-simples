@@ -192,14 +192,14 @@ void interpret_code(const char *code)
         else
         {
           // Ignora o bloco se a condição for falsa
-          // while (**input != '\0' && strncmp(input, "end", 3) != 0)
-          // {
-          //   input++;
-          // }
-          // if (strncmp(input, "end", 3) == 0)
-          // {
-          //   input += 3; // Avança "end"
-          // }
+          while (*input != '\0' && strncmp(input, "end", 3) != 0)
+          {
+            input++;
+          }
+          if (strncmp(input, "end", 3) == 0)
+          {
+            input += 3; // Avança "end"
+          }
         }
       }
     }
