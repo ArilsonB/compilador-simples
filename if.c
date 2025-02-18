@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 
 // Tamanho máximo da entrada
 #define MAX_INPUT_SIZE 256
