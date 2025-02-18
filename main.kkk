@@ -4,4 +4,6 @@ if x < 10: print("teste")
 
 if x = 5: print("Oi")
 
-input(p)
+input(x)
+
+if x = 6: print("X é igual a 6")
