@@ -3,3 +3,5 @@ x = 5
 if x < 10: print("teste")
 
 if x = 5: print("Oi")
+
+input(p)

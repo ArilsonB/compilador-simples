@@ -131,6 +131,23 @@ void execute_command(const char **input)
                 putchar('\n');
             }
         }
+    }else if(strncmp(*input, "input", 5) == 0){
+        (*input) += 5; // Avança "input"
+        skip_whitespace(input);
+        if(**input == '('){
+            (*input)++;
+            skip_whitespace(input);
+            if(isalpha(**input)){
+                char var = parse_variable(input);
+                skip_whitespace(input);
+                printf("Digite um valor para %c: ", var);
+                scanf("%d", &variables[var - 'a']);
+                if(**input == ')'){
+                    (*input)++;
+                }
+                putchar('\n');
+            }
+        }
     }
     else if (isalpha(**input))
     {

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include <interpreter.c>
+
 
 // Função para ignorar espaços em branco
 void skip_whitespace(const char **input) {
