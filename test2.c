@@ -132,7 +132,7 @@ void execute_and_generate_assembly(const char **input, FILE *output_file)
     }
     else if (strncmp(*input, "input", 5) == 0)
     {
-        (*input) += 5; // Avança "input"
+        (*input) += 5; // Avança "input"'
         skip_whitespace(input);
         if (**input == '(')
         {
